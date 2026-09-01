@@ -5,3 +5,4 @@
 - [x] JOBOS-003 — Base folder structure and lib utilities
 - [x] JOBOS-004 — Base UI primitives
 - [x] JOBOS-005 — Dashboard layout shell
+- [x] JOBOS-006 — Testing and quality pipeline
