@@ -4,3 +4,4 @@
 - [x] JOBOS-002 — Add Prisma and connect to local PostgreSQL
 - [x] JOBOS-003 — Base folder structure and lib utilities
 - [x] JOBOS-004 — Base UI primitives
+- [x] JOBOS-005 — Dashboard layout shell
