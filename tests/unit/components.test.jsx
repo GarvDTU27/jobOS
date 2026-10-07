@@ -1,11 +1,15 @@
 import React from 'react';
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, vi, afterEach } from 'vitest';
+import { render, screen, fireEvent, cleanup } from '@testing-library/react';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { Dialog, DialogTrigger, DialogContent } from '../../components/ui/Dialog';
 
 describe('UI Primitives', () => {
+  afterEach(() => {
+    cleanup();
+  });
+
   it('renders Button correctly', () => {
     render(<Button>Click me</Button>);
     const button = screen.getByRole('button', { name: /click me/i });
