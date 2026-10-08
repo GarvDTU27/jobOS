@@ -6,3 +6,7 @@
 - [x] JOBOS-004 — Base UI primitives
 - [x] JOBOS-005 — Dashboard layout shell
 - [x] JOBOS-006 — Testing and quality pipeline
+- [x] JOBOS-007 — User and Session Prisma models + migration
+- [x] JOBOS-008 — Password hashing utility
+- [x] JOBOS-009 — Registration validation schema and service
+- [x] JOBOS-010 — Auth.js configuration with Credentials provider + DB sessions
