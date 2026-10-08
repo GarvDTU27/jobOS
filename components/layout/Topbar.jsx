@@ -29,7 +29,7 @@ export async function Topbar() {
             </span>
             <form action={async () => {
               "use server"
-              await signOut()
+              await signOut({ redirectTo: '/login' })
             }}>
               <Button type="submit" variant="ghost" size="sm" className="text-gray-500 hover:text-gray-900 flex items-center gap-2">
                 <LogOut className="w-4 h-4" />

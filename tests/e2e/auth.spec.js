@@ -22,14 +22,17 @@ test.describe('Authentication Flow', () => {
     await page.click('button[type="submit"]');
 
     // Wait for redirect to dashboard
-    await expect(page).toHaveURL(/\/dashboard/);
+    await expect(page).toHaveURL('http://localhost:3000/');
+
+    // Verify the email verification banner is visible
+    await expect(page.locator('body')).toContainText('Please verify your email address');
 
     // 3. Logout
     await page.click('button:has-text("Logout")');
     await expect(page).toHaveURL(/\/login/);
     
     // 4. Verify Route Protection
-    await page.goto('/dashboard');
+    await page.goto('/');
     await expect(page).toHaveURL(/\/login/);
   });
 });
