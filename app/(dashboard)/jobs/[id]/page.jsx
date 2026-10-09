@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { NotFoundError } from '@/lib/utils/errors';
 import Link from 'next/link';
 import ConvertJobButton from '@/components/jobs/ConvertJobButton';
+import ExtractionResults from '@/features/jd-analysis/ExtractionResults';
 
 export default async function JobDetailPage({ params }) {
   const session = await getSessionOrThrow();
@@ -83,6 +84,10 @@ export default async function JobDetailPage({ params }) {
           </dl>
         </div>
       </div>
+
+      {job.analysis && (
+        <ExtractionResults data={job} />
+      )}
     </div>
   );
 }
