@@ -10,7 +10,7 @@ import { useState } from 'react';
 const formSchema = z.object({
   company: z.string().min(1, 'Company is required').max(100),
   role: z.string().min(1, 'Role is required').max(100),
-  location: z.string().max(100).optional(),
+  location: z.string().max(100).optional().nullable(),
   priority: z.enum(['LOW', 'MEDIUM', 'HIGH']).default('MEDIUM'),
   status: z.enum([
     'SAVED', 'APPLIED', 'OA', 'INTERVIEW', 'TECHNICAL_INTERVIEW',
