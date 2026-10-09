@@ -117,4 +117,36 @@ describe('Job, Skill, JobSkill Models', () => {
       })
     ).rejects.toThrow(/Unique constraint failed on the fields: \(`jobId`,`skillId`\)/);
   });
+
+  it('should cascade delete JobAnalysis when Job is deleted', async () => {
+    const job = await prisma.job.create({
+      data: {
+        userId: user.id,
+        company: 'AI Inc',
+        role: 'Prompt Engineer',
+      }
+    });
+
+    const jobAnalysis = await prisma.jobAnalysis.create({
+      data: {
+        jobId: job.id,
+        seniority: 'Mid-Level',
+        responsibilities: ['Write prompts', 'Evaluate outputs'],
+      }
+    });
+
+    expect(jobAnalysis.jobId).toBe(job.id);
+
+    // Delete the Job
+    await prisma.job.delete({
+      where: { id: job.id }
+    });
+
+    // Check if JobAnalysis was deleted
+    const deletedAnalysis = await prisma.jobAnalysis.findUnique({
+      where: { id: jobAnalysis.id }
+    });
+
+    expect(deletedAnalysis).toBeNull();
+  });
 });
