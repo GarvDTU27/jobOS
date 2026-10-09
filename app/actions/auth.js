@@ -14,7 +14,7 @@ export async function register(formData) {
     }
     // Zod errors are caught here
     if (error.name === 'ZodError') {
-      return { error: error.errors[0].message };
+      return { error: error.issues[0].message };
     }
     return { error: 'An unexpected error occurred during registration.' };
   }
