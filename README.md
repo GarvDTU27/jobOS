@@ -1,6 +1,6 @@
 # JobOS
 
-[![CI Status](https://github.com/BJCRC/jobOS/actions/workflows/ci.yml/badge.svg)](https://github.com/BJCRC/jobOS/actions/workflows/ci.yml)
+[![CI Status](https://github.com/GarvDTU27/jobOS/actions/workflows/ci.yml/badge.svg)](https://github.com/GarvDTU27/jobOS/actions/workflows/ci.yml)
 [![Node Version](https://img.shields.io/badge/node-%3E%3D20.0.0-brightgreen.svg)](https://nodejs.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![Test Coverage](https://img.shields.io/badge/coverage-83.5%25-blue.svg)](./tests)
@@ -202,7 +202,7 @@ erDiagram
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/BJCRC/jobOS.git
+   git clone https://github.com/GarvDTU27/jobOS.git
    cd jobOS
    ```
 
