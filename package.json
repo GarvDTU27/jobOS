@@ -6,8 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "test": "vitest run",
+    "test:coverage": "vitest run tests/unit --coverage",
     "test:watch": "vitest",
     "test:e2e": "playwright test"
   },
@@ -39,6 +40,7 @@
     "@testing-library/dom": "^10.4.1",
     "@testing-library/react": "^16.3.3",
     "@vitejs/plugin-react": "^6.1.1",
+    "@vitest/coverage-v8": "^4.1.11",
     "eslint": "^9",
     "eslint-config-next": "16.3.4",
     "jsdom": "^30.0.1",

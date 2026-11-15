@@ -37,7 +37,7 @@ export default function ResumesPage() {
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-gray-900">Resumes</h1>
           <p className="mt-2 text-sm text-gray-500">
-            A list of all resumes you've uploaded.
+            A list of all resumes you&apos;ve uploaded.
           </p>
         </div>
       </div>

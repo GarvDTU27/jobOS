@@ -41,7 +41,7 @@ export default async function JobsPage({ searchParams }) {
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-gray-900">Saved Jobs</h1>
           <p className="mt-2 text-sm text-gray-500">
-            A list of all jobs you've saved.
+            A list of all jobs you&apos;ve saved.
           </p>
         </div>
         <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">

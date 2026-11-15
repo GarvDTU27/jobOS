@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import React from 'react';
 
 export default function ApplicationFilters() {
@@ -14,21 +14,9 @@ export default function ApplicationFilters() {
   const [sortBy, setSortBy] = useState(searchParams.get('sortBy') || 'createdAt');
   const [sortOrder, setSortOrder] = useState(searchParams.get('sortOrder') || 'desc');
 
-  const isInitialMount = React.useRef(true);
+  const isInitialMount = useRef(true);
 
-  // Debounced search
-  useEffect(() => {
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-      return;
-    }
-    const handler = setTimeout(() => {
-      applyFilters({ search, status, sortBy, sortOrder });
-    }, 300);
-    return () => clearTimeout(handler);
-  }, [search]); // Only run when search changes
-
-  const applyFilters = (filters) => {
+  const applyFilters = useCallback((filters) => {
     const params = new URLSearchParams(searchParams);
     
     if (filters.search) params.set('search', filters.search);
@@ -46,7 +34,19 @@ export default function ApplicationFilters() {
     params.delete('skip');
 
     router.push(`${pathname}?${params.toString()}`);
-  };
+  }, [pathname, router, searchParams]);
+
+  // Debounced search
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+    const handler = setTimeout(() => {
+      applyFilters({ search, status, sortBy, sortOrder });
+    }, 300);
+    return () => clearTimeout(handler);
+  }, [search, status, sortBy, sortOrder, applyFilters]);
 
   const handleStatusChange = (e) => {
     const val = e.target.value;
