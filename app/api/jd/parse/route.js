@@ -1,6 +1,7 @@
 import { getSessionOrThrow } from '../../../../lib/auth/session';
 import { parseAndSaveJobDescription } from '../../../../lib/services/jd-service';
 import { handleRouteError, ValidationError, FileTooLargeError } from '../../../../lib/utils/errors';
+import { logger } from '../../../../lib/utils/logger';
 import { z } from 'zod';
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
@@ -45,6 +46,11 @@ export async function POST(req) {
       text,
       fileBuffer,
       mimeType
+    });
+
+    logger.info('Job description parsed and saved', {
+      userId: session.user.id,
+      jobId: result?.job?.id,
     });
 
     return Response.json({ data: result }, { status: 201 });

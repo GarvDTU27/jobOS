@@ -3,6 +3,7 @@ import { getSessionOrThrow } from '../../../lib/auth/session';
 import { resumeService } from '../../../lib/services/resume-service';
 import { uploadResumeSchema, ALLOWED_MIME_TYPES, MAX_RESUME_SIZE } from '../../../lib/validation/schemas/resume';
 import { handleRouteError } from '../../../lib/utils/errors';
+import { logger } from '../../../lib/utils/logger';
 
 export async function POST(request) {
   try {
@@ -38,6 +39,13 @@ export async function POST(request) {
       validatedData.name,
       validatedData.isDefault
     );
+
+    logger.info('Resume uploaded successfully', {
+      userId: session.userId,
+      resumeId: resume.id,
+      fileName: file.name,
+      fileSize: file.size,
+    });
 
     return NextResponse.json({ data: resume }, { status: 201 });
   } catch (error) {

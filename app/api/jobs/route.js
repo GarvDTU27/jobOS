@@ -2,6 +2,7 @@ import { getSessionOrThrow } from '../../../lib/auth/session';
 import { createJob, listJobs } from '../../../lib/services/job-service';
 import { createJobSchema } from '../../../lib/validation/schemas/job';
 import { handleRouteError, ValidationError } from '../../../lib/utils/errors';
+import { logger } from '../../../lib/utils/logger';
 
 export async function POST(request) {
   try {
@@ -19,6 +20,12 @@ export async function POST(request) {
     }
 
     const job = await createJob(session.user.id, validatedData);
+    logger.info('Job created successfully', {
+      userId: session.user.id,
+      jobId: job.id,
+      company: job.company,
+      role: job.role,
+    });
     return Response.json(job, { status: 201 });
   } catch (error) {
     return handleRouteError(error);

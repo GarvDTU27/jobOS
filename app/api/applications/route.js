@@ -2,6 +2,7 @@ import { getSessionOrThrow } from '../../../lib/auth/session.js';
 import { createApplication, listApplications } from '../../../lib/services/application-service.js';
 import { createApplicationSchema } from '../../../lib/validation/schemas/application.js';
 import { handleRouteError, ValidationError } from '../../../lib/utils/errors.js';
+import { logger } from '../../../lib/utils/logger.js';
 
 export async function GET(request) {
   try {
@@ -40,6 +41,12 @@ export async function POST(request) {
     }
 
     const application = await createApplication(session.user.id, parsed.data);
+    logger.info('Application created successfully', {
+      userId: session.user.id,
+      applicationId: application.id,
+      company: application.company,
+      role: application.role,
+    });
     return Response.json(application, { status: 201 });
   } catch (error) {
     return handleRouteError(error);
