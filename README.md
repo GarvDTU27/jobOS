@@ -59,16 +59,16 @@ JobOS is designed for software engineers and knowledge workers who:
 - **Automated JD Analysis via Gemini AI**: Extraction pipeline that transforms unstructured job postings into structured JSON (technical skills, soft skills, seniority, responsibilities, and qualifications) using Google Gemini 2.0 Flash.
 - **Prompt Injection Defense**: Boundary tagging, input sanitization, and strict Zod validation preventing malicious prompt injection in pasted job descriptions.
 - **Skill Normalization Engine**: Alias dictionary engine resolving skill variations (e.g., `JS` → `JavaScript`, `Postgres` → `PostgreSQL`, `React.js` → `React`).
+- **Deterministic Resume↔JD Matching Engine**: Multi-factor scoring algorithm evaluating candidates across 6 independent dimensions (Technical Skills, Experience, Education, Responsibilities, Keywords, Seniority) with customizable weights (default 30/20/10/20/10/10) and LLM-assisted residual semantic matching via Gemini 2.0 Flash.
+- **Match Analysis & Skill Gap Dashboard**: Interactive breakdown view (`/analysis/[applicationId]`) displaying aggregate match scores, category progress meters, and filtered skill gap tables (`STRONG`, `PARTIAL`, `MISSING` across `REQUIRED` and `PREFERRED` criteria) with explicit ATS disclaimers.
 - **Observability & Diagnostics**: Structured JSON logger (`lib/logger.js`) with contextual metadata, and a `/api/health` endpoint monitoring database connectivity.
 - **Multi-Stage Containerization**: Minimal Alpine-based Docker container with Next.js standalone output and Docker Compose configuration.
 
 ### Roadmap (In Progress & Planned)
-- **In Progress**: Deterministic 6-category match scoring engine (`lib/matching/score-engine.js`) and residual semantic skill matcher (`JOBOS-056` – `JOBOS-061`).
-- **Planned**: Match Analysis UI with transparent skill-gap visualization (`✓ Strong`, `~ Partial`, `✗ Missing`).
-- **Planned**: AI Resume Assistant for bullet improvement with strict anti-fabrication guardrails.
-- **Planned**: Visual drag-and-drop Kanban pipeline board (`app/(dashboard)/applications/kanban`).
-- **Planned**: Interactive Analytics Dashboard with funnel conversion metrics.
-- **Planned**: Email dispatch via AWS SES / Resend for verification and event reminders.
+- **Phase 08 (Next)**: AI Resume Assistant for bullet point improvement with strict anti-fabrication guardrails (`lib/ai/resume-writing.js`).
+- **Phase 09**: Interactive Analytics Dashboard with funnel conversion metrics.
+- **Phase 10**: Email dispatch via AWS SES / Resend for verification and event reminders.
+- **Phase 11**: Visual drag-and-drop Kanban pipeline board (`app/(dashboard)/applications/kanban`).
 
 ---
 
@@ -276,11 +276,11 @@ npm run test:coverage
 ```
 
 **Measured Test Coverage (Vitest v8):**
-- **Statements**: `82.5%`
-- **Branches**: `79.6%`
-- **Functions**: `76.6%`
-- **Lines**: `83.5%`
-- **Total Unit Tests**: 18 test suites, 74 passing tests
+- **Statements**: `85.1%`
+- **Branches**: `77.9%`
+- **Functions**: `84.8%`
+- **Lines**: `86.1%`
+- **Total Unit Tests**: 24 test suites, 98 passing tests
 
 ### 2. End-to-End Tests (Playwright)
 Executes real browser flows (registration, login, route guards, application creation, and filtering):

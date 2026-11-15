@@ -427,11 +427,11 @@ flowchart TD
 ```
 
 ### Measured Test Coverage (Vitest v8)
-- **Statement Coverage**: `82.52%`
-- **Branch Coverage**: `79.64%`
-- **Function Coverage**: `76.56%`
-- **Line Coverage**: `83.48%`
-- **Total Passing Tests**: 18 test suites, 74 passing tests
+- **Statement Coverage**: `85.07%`
+- **Branch Coverage**: `77.90%`
+- **Function Coverage**: `84.82%`
+- **Line Coverage**: `86.13%`
+- **Total Passing Tests**: 24 test suites, 98 passing tests
 
 AI-dependent tests mock `lib/ai/provider.js`, guaranteeing zero network cost, deterministic assertions, and offline execution in CI.
 

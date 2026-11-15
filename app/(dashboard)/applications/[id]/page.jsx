@@ -62,8 +62,14 @@ export default async function ApplicationDetailPage({ params }) {
         </div>
         <div className="mt-4 flex md:ml-4 md:mt-0">
           <Link
+            href={`/analysis/${application.id}`}
+            className="inline-flex items-center rounded-md bg-emerald-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-500"
+          >
+            Match Analysis {application.matchScore !== null && application.matchScore !== undefined ? `(${application.matchScore}%)` : ''}
+          </Link>
+          <Link
             href={`/applications/${application.id}/edit`}
-            className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+            className="ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
           >
             Edit
           </Link>
@@ -100,6 +106,20 @@ export default async function ApplicationDetailPage({ params }) {
             <div className="sm:col-span-1">
               <dt className="text-sm font-medium text-gray-500">Recruiter Contact</dt>
               <dd className="mt-1 text-sm text-gray-900">{application.recruiterContact || 'N/A'}</dd>
+            </div>
+            <div className="sm:col-span-1">
+              <dt className="text-sm font-medium text-gray-500">Match Readiness</dt>
+              <dd className="mt-1 text-sm font-semibold text-gray-900">
+                {application.matchScore !== null && application.matchScore !== undefined ? (
+                  <Link href={`/analysis/${application.id}`} className="text-emerald-600 hover:underline">
+                    {application.matchScore}% Match (View Breakdown)
+                  </Link>
+                ) : (
+                  <Link href={`/analysis/${application.id}`} className="text-indigo-600 hover:underline">
+                    Compute Match Alignment
+                  </Link>
+                )}
+              </dd>
             </div>
           </dl>
         </div>

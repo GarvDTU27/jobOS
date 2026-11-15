@@ -46,11 +46,11 @@
 | | Interactive JD Extraction UI | **Done** | `features/jd-analysis/JDInputPanel.jsx`, `ExtractionResults.jsx` |
 | **Resume/JD Matching** | MatchAnalysis & SkillGap Models | **Done** | `prisma/schema.prisma` (`MatchAnalysis`, `SkillGap` with `isCurrent` toggle) |
 | | Skill Normalizer & Alias Engine | **Done** | `lib/matching/skill-normalizer.js` (dictionary aliases, sanitization, unit tested) |
-| | AI Semantic Skill Matcher | **In Progress** | Scheduled for completion in Phase 07 (`JOBOS-056`) |
-| | Deterministic 6-Category Scorer | **In Progress** | Scheduled for completion in Phase 07 (`JOBOS-057`) |
-| | User Match Weight Overrides | **Planned** | User preference weight overrides (`JOBOS-058`) |
-| | Match Analysis REST API | **Planned** | `app/api/match/` (directory stubbed with `.gitkeep`) |
-| | Match Analysis UI Breakdown | **Planned** | `app/(dashboard)/analysis/[applicationId]/` (directory stubbed with `.gitkeep`) |
+| | AI Semantic Skill Matcher | **Done** | `lib/ai/matching.js` (Gemini structured outputs on residual unmatched skills) |
+| | Deterministic 6-Category Scorer | **Done** | `lib/matching/score-engine.js` (pure function, 6 categories 0–100) |
+| | User Match Weight Overrides | **Done** | `lib/matching/weights.js` (default 30/20/10/20/10/10 with override merge & fallback) |
+| | Match Analysis REST API | **Done** | `app/api/match/route.js`, `app/api/match/[applicationId]/route.js` |
+| | Match Analysis UI Breakdown | **Done** | `app/(dashboard)/analysis/[applicationId]/page.jsx`, `features/matching/MatchScoreCard.jsx`, `features/matching/SkillGapList.jsx` |
 | **AI Resume Assistant** | Bullet Tailoring API | **Planned** | `app/api/ai/tailor-bullet/` (Phase 08) |
 | | Diff-based Approval UX | **Planned** | Phase 08 |
 | **Analytics & Reporting** | Funnel Metrics & Conversion API | **Planned** | `app/api/analytics/` (Phase 09) |
@@ -62,7 +62,7 @@
 | | Multi-stage Dockerfile | **Done** | `Dockerfile` (Node 20 Alpine, standalone build, unprivileged user) |
 | | Docker Compose Setup | **Done** | `docker-compose.yml` (Next.js app + PostgreSQL 16 container with healthchecks) |
 | | GitHub Actions CI/CD | **Done** | `.github/workflows/ci.yml` (lint, prisma generate, vitest with coverage, build, Playwright E2E) |
-| | Test Suite (Vitest) | **Done** | 18 test files, 74 tests passing (82.52% statement coverage) |
+| | Test Suite (Vitest) | **Done** | 24 test files, 98 tests passing (85.07% statement coverage) |
 | | E2E Suite (Playwright) | **Done** | `tests/e2e/auth.spec.js`, `tests/e2e/applications.spec.js` |
 | | ESLint 9 Integration | **Done** | `eslint.config.mjs` (0 errors, 0 warnings) |
 
@@ -70,9 +70,8 @@
 
 ## 2. Known Gaps and Technical Debt
 
-1. **Phase 07 Matching Engine Remaining Scope**:
-   - The database models (`MatchAnalysis`, `SkillGap`) and the skill normalizer (`lib/matching/skill-normalizer.js`) are implemented.
-   - The deterministic multi-factor scoring engine (`lib/matching/score-engine.js`), the semantic residual matcher (`lib/ai/matching.js`), the match service orchestration, and the breakdown UI (`/analysis/[applicationId]`) are actively in progress.
+1. **Phase 07 Complete**:
+   - The Resume/JD Matching Engine is fully implemented and verified across all 6 scoring categories, residual semantic Gemini matching, transactional persistence of `MatchAnalysis` and `SkillGap`, and the interactive breakdown UI (`/analysis/[applicationId]`). Next up: Phase 08 (AI Resume Assistant).
 
 2. **Frontend Reset Password & Settings Pages**:
    - The backend API endpoints for password reset requests and confirmations exist (`app/api/auth/reset-password/`), but the front-end forms under `app/(auth)/reset-password/` and user settings under `app/(dashboard)/settings/` are pending UI templates.

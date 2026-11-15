@@ -62,9 +62,15 @@ Format per task: ID, Title, Phase, Priority (P0=MVP blocking, P1=MVP important, 
 - [x] **JOBOS-053** — Interactive JD input & extraction results UI (`features/jd-analysis/`)
 - [x] **JOBOS-054** — MatchAnalysis and SkillGap Prisma models with `isCurrent` toggle
 - [x] **JOBOS-055** — Skill normalizer with alias table & unit tests (`lib/matching/skill-normalizer.js`)
+- [x] **JOBOS-056** — AI semantic skill matcher on residual unmatched skill pairs (`lib/ai/matching.js`)
+- [x] **JOBOS-057** — Deterministic 6-category score engine (`lib/matching/score-engine.js`)
+- [x] **JOBOS-058** — Match weights configuration & per-user override (`lib/matching/weights.js`)
+- [x] **JOBOS-059** — Match service orchestrator & endpoints (`POST /api/match`, `GET /api/match/[applicationId]`)
+- [x] **JOBOS-060** — Skill gap derivation (`STRONG`, `PARTIAL`, `MISSING` × `REQUIRED`, `PREFERRED`)
+- [x] **JOBOS-061** — Match Analysis UI breakdown (`/analysis/[applicationId]` with score card & gap list)
 - [x] **ENG-001** — Multi-Stage Dockerfile & Docker Compose Setup
 - [x] **ENG-002** — Automated GitHub Actions CI/CD Pipeline
-- [x] **ENG-003** — Vitest Test Coverage Reporting with v8 Provider (82.5% statement coverage)
+- [x] **ENG-003** — Vitest Test Coverage Reporting with v8 Provider (85.1% statement coverage, 98 tests)
 - [x] **ENG-004** — Structured JSON Logging & Centralized Error Handling (`lib/logger.js`)
 - [x] **ENG-005** — End-to-End Runtime Input Validation with Zod
 - [x] **ENG-006** — Database Health Check Endpoint (`GET /api/health`)
@@ -72,18 +78,12 @@ Format per task: ID, Title, Phase, Priority (P0=MVP blocking, P1=MVP important, 
 
 ---
 
-### [-] IN PROGRESS (Phase 07 Matching Engine Core)
-- [-] **JOBOS-056** — AI semantic skill matcher on residual unmatched skill pairs (`lib/ai/matching.js`)
-- [-] **JOBOS-057** — Deterministic 6-category score engine (`lib/matching/score-engine.js`)
+### [-] IN PROGRESS (Phase 08 Preparation)
+- [-] **JOBOS-062** — AI Resume Assistant: Anti-fabrication prompt guardrails (`lib/ai/resume-writing.js`)
 
 ---
 
-### [ ] NEXT / PLANNED TASKS (Phases 07–11 + Production Deployment)
-- [ ] **JOBOS-058** — Match weights configuration & per-user override (`lib/matching/weights.js`)
-- [ ] **JOBOS-059** — Match service orchestrator & endpoints (`POST /api/match`, `GET /api/match/[applicationId]`)
-- [ ] **JOBOS-060** — Skill gap derivation (`STRONG`, `PARTIAL`, `MISSING` × `REQUIRED`, `PREFERRED`)
-- [ ] **JOBOS-061** — Match Analysis UI breakdown (`/analysis/[applicationId]` with score card & gap list)
-- [ ] **JOBOS-062** — AI Resume Assistant: Anti-fabrication prompt guardrails
+### [ ] NEXT / PLANNED TASKS (Phases 08–11 + Production Deployment)
 - [ ] **JOBOS-063** — AI Resume Assistant: Tailored bullet generation API (`/api/ai/tailor-bullet`)
 - [ ] **JOBOS-064** — AI Resume Assistant: Diff-based bullet review & approval UI
 - [ ] **JOBOS-065** — Application Kanban board view (`app/(dashboard)/applications/kanban`)
@@ -471,7 +471,7 @@ Objective: Google Gemini AI client integration, prompt injection defense, struct
 
 ---
 
-### Phase 07 — Resume/JD Matching Engine (`[-] IN PROGRESS`)
+### Phase 07 — Resume/JD Matching Engine (`[x] DONE`)
 Branch: `phase/07-matching`  
 Objective: Deterministic multi-factor scoring engine, skill-gap categorization, explainable match breakdown UI.
 
@@ -487,41 +487,41 @@ Objective: Deterministic multi-factor scoring engine, skill-gap categorization, 
 - **Acceptance criteria**: Normalizer handles aliases, punctuation, and direct matches; alias dictionary is cleanly structured.
 - **Tests**: Unit tests in `tests/unit/skill-normalizer.test.js` (11 tests passing).
 
-#### [-] JOBOS-056 — AI semantic skill matcher (`[-] IN PROGRESS`)
+#### [x] JOBOS-056 — AI semantic skill matcher (`[x] DONE`)
 - **Priority**: P0 | **Dependencies**: JOBOS-049, JOBOS-050, JOBOS-055
 - **Description**: `lib/ai/matching.js` matching residual unmatched skill pairs for near-equivalence (e.g. "Redis" vs "In-memory caching") returning confidence score.
 - **Acceptance criteria**: Operates only on unmatched residual sets to minimize LLM token usage and latency.
-- **Tests**: Unit tests with mocked Gemini provider.
+- **Tests**: Unit tests in `tests/unit/semantic-matching.test.js` (5 tests passing).
 
-#### [-] JOBOS-057 — Deterministic score engine (`[-] IN PROGRESS`)
+#### [x] JOBOS-057 — Deterministic score engine (`[x] DONE`)
 - **Priority**: P0 | **Dependencies**: JOBOS-055, JOBOS-056
 - **Description**: `lib/matching/score-engine.js` implementing pure function `computeMatch({ resumeData, jobData, semanticPairs, weights })`.
 - **Acceptance criteria**: Zero database or network dependency; identical inputs always produce identical scores (0–100).
-- **Tests**: Extensive unit tests verifying category formulas and edge cases (perfect match=100, zero match=0).
+- **Tests**: Unit tests in `tests/unit/score-engine.test.js` (5 tests passing).
 
-#### [ ] JOBOS-058 — Match weights configuration & per-user override (`[ ] PLANNED`)
+#### [x] JOBOS-058 — Match weights configuration & per-user override (`[x] DONE`)
 - **Priority**: P1 | **Dependencies**: JOBOS-057
 - **Description**: `lib/matching/weights.js` defining default category weights (30/20/10/20/10/10) and merging user preference overrides.
 - **Acceptance criteria**: Malformed weight overrides fall back safely to defaults with a logged warning.
-- **Tests**: Unit tests for weight merge and fallback logic.
+- **Tests**: Unit tests in `tests/unit/weights.test.js` (4 tests passing).
 
-#### [ ] JOBOS-059 — Match service orchestrator & endpoints (`[ ] PLANNED`)
+#### [x] JOBOS-059 — Match service orchestrator & endpoints (`[x] DONE`)
 - **Priority**: P0 | **Dependencies**: JOBOS-057, JOBOS-058, JOBOS-054
 - **Description**: `lib/services/match-service.js` orchestrating normalizer → semantic matcher → score engine → persistence; endpoints `POST /api/match`, `GET /api/match/[applicationId]`.
 - **Acceptance criteria**: Denormalized `Application.matchScore` updated atomically alongside `MatchAnalysis` record.
-- **Tests**: Integration test verifying complete match run and database state updates.
+- **Tests**: Unit tests in `tests/unit/match-service.test.js` (5 tests passing).
 
-#### [ ] JOBOS-060 — Skill gap derivation (`[ ] PLANNED`)
+#### [x] JOBOS-060 — Skill gap derivation (`[x] DONE`)
 - **Priority**: P0 | **Dependencies**: JOBOS-059
 - **Description**: Derive `SkillGap` records (`STRONG`, `PARTIAL`, `MISSING` × `REQUIRED`, `PREFERRED`) persisted with `MatchAnalysis`.
 - **Acceptance criteria**: Every JD skill is categorized into exactly one `SkillGap` record.
-- **Tests**: Unit test on gap derivation logic.
+- **Tests**: Unit tests in `tests/unit/skill-gap.test.js` (1 test passing).
 
-#### [ ] JOBOS-061 — Match Analysis UI breakdown (`[ ] PLANNED`)
+#### [x] JOBOS-061 — Match Analysis UI breakdown (`[x] DONE`)
 - **Priority**: P0 | **Dependencies**: JOBOS-059, JOBOS-060
-- **Description**: `app/(dashboard)/analysis/[applicationId]/page.jsx` rendering overall score, category progress bars, and skill gap lists.
+- **Description**: `app/(dashboard)/analysis/[applicationId]/page.jsx`, `MatchScoreCard.jsx`, `SkillGapList.jsx` rendering overall score, category progress bars, and skill gap lists.
 - **Acceptance criteria**: Triggerable from application detail page when resume and job are attached; clear disclaimer stating "Not an ATS score".
-- **Tests**: Playwright E2E test verifying score breakdown rendering.
+- **Tests**: Component unit tests in `tests/unit/matching-components.test.jsx` (4 tests passing).
 
 ---
 
