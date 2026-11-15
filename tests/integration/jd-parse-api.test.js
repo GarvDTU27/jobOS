@@ -56,8 +56,8 @@ describe('POST /api/jd/parse', () => {
     jdServiceModule.parseAndSaveJobDescription.mockRejectedValue(new ParserError('UNSUPPORTED_FORMAT'));
 
     const formData = new FormData();
-    const blob = new Blob(['fake content'], { type: 'application/octet-stream' });
-    formData.append('file', blob, 'test.bin');
+    const file = new File(['fake content'], 'test.bin', { type: 'application/octet-stream' });
+    formData.append('file', file);
 
     const req = new Request('http://localhost/api/jd/parse', {
       method: 'POST',

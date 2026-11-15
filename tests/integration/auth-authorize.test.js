@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll, afterAll, afterEach } from 'vitest';
-import { authorizeCredentials } from '../../lib/auth/auth.config';
+import { authorizeCredentials } from '../../lib/auth/auth';
 import { authService } from '../../lib/services/auth-service';
 import prisma from '../../lib/db/prisma';
 
