@@ -1,9 +1,9 @@
 # JobOS
 
 [![CI Status](https://github.com/GarvDTU27/jobOS/actions/workflows/ci.yml/badge.svg)](https://github.com/GarvDTU27/jobOS/actions/workflows/ci.yml)
-[![Node Version](https://img.shields.io/badge/node-%3E%3D20.0.0-brightgreen.svg)](https://nodejs.org/)
+[![Node Version](https://img.shields.io/badge/node-%3E%3D22.13.0-brightgreen.svg)](https://nodejs.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
-[![Test Coverage](https://img.shields.io/badge/coverage-83.5%25-blue.svg)](./tests)
+[![Test Coverage](https://img.shields.io/badge/coverage-85.1%25-blue.svg)](./tests)
 
 > An intelligent, single-tenant personal Job Search Operating System that unifies job discovery, resume ingestion, automated JD analysis, deterministic skill matching, and full application lifecycle tracking.
 
@@ -194,7 +194,7 @@ erDiagram
 ## Getting Started
 
 ### Prerequisites
-- **Node.js**: `v20.x` or `v22.x` (LTS recommended)
+- **Node.js**: `v22.x` (>= `22.13.0` LTS recommended)
 - **Package Manager**: `npm` (v10+)
 - **PostgreSQL**: `v15+` (local service or Docker container)
 
