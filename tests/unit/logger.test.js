@@ -5,14 +5,18 @@ describe('Structured Logger', () => {
   let consoleLogSpy;
   let consoleWarnSpy;
   let consoleErrorSpy;
+  let prevLogLevel;
 
   beforeEach(() => {
+    prevLogLevel = process.env.LOG_LEVEL;
+    process.env.LOG_LEVEL = 'info';
     consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
     consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
     consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
   });
 
   afterEach(() => {
+    process.env.LOG_LEVEL = prevLogLevel;
     vi.restoreAllMocks();
   });
 
@@ -60,5 +64,17 @@ describe('Structured Logger', () => {
     expect(parsed.requestId).toBe('req-abc');
     expect(parsed.service).toBe('applications');
     expect(parsed.appId).toBe('app-999');
+  });
+
+  it('suppresses logs below the configured LOG_LEVEL', () => {
+    process.env.LOG_LEVEL = 'warn';
+    logger.info('Should not be logged');
+    expect(consoleLogSpy).not.toHaveBeenCalled();
+
+    logger.warn('Should be logged', { detail: 'test' });
+    expect(consoleWarnSpy).toHaveBeenCalledTimes(1);
+
+    logger.error('Should also be logged', { detail: 'err' });
+    expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
   });
 });
